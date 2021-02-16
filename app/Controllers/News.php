@@ -2,8 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Models\NewsModel;
 use CodeIgniter\Controller;
+use App\Models\NewsModel;
+use App\Entities\News as NewsEntity;
 
 class News extends Controller
 {
@@ -14,7 +15,7 @@ class News extends Controller
             'news'  => $model->getNews(),
             'title' => 'News archive',
         ];
-    
+
         echo view('templates/header', $data);
         echo view('news/overview', $data);
         echo view('templates/footer', $data);
@@ -39,7 +40,7 @@ class News extends Controller
 
     public function create()
     {
-        $model = new NewsModel();
+        $newsModel = new NewsModel();
 
         if ($this->request->getMethod() === 'post'
             && $this->validate([
@@ -48,16 +49,16 @@ class News extends Controller
             ]))
         {
             $slug = url_title($this->request->getPost('title'), '-', TRUE);
-            if ($model->getNews($slug) != NULL)
+            if ($newsModel->getNews($slug) != NULL)
             {
                 $slug = url_title($this->request->getPost('title') . ' ' . uniqid(), '-', TRUE);
             }
 
-            $model->save([
-                'title' => $this->request->getPost('title'),
-                'slug'  => $slug,
-                'body'  => $this->request->getPost('body'),
-            ]);
+            $news = new NewsEntity();
+            $news->title = $this->request->getPost('title');
+            $news->slug = $slug;
+            $news->body = $this->request->getPost('body');
+            $newsModel->save($news);
 
             return redirect()->route('news');
         }

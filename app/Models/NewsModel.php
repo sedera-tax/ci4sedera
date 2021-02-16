@@ -7,6 +7,8 @@ class NewsModel extends Model
 {
     protected $table = 'news';
     protected $allowedFields = ['title', 'slug', 'body'];
+    protected $returnType = 'App\Entities\News';
+    protected $useTimestamps = true;
 
     public function getNews($slug = false)
     {

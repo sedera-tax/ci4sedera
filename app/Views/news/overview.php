@@ -2,14 +2,14 @@
 
 <?php if (! empty($news) && is_array($news)) : ?>
 
-<?php foreach ($news as $news_item): ?>
+<?php foreach ($news as $item): ?>
 
-    <h3><?= esc($news_item['title']) ?></h3>
+    <h3><?= esc($item->title) ?></h3>
 
     <div class="main">
-        <?= esc($news_item['body']) ?>
+        <?php echo esc($item->body); ?>
     </div>
-    <p><a href="/news/<?= esc($news_item['slug'], 'url') ?>">View article</a></p>
+    <p><a href="<?php echo site_url("news/" . esc($item->slug, 'url')) ?>">View article</a></p>
 
 <?php endforeach; ?>
 
