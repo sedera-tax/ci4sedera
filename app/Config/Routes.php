@@ -38,6 +38,7 @@ $routes->match(['get'], 'news/test', 'News::test');
 $routes->get('news/(:segment)', 'News::view/$1');
 $routes->get('news', 'News::index');
 $routes->get('/static/(:any)', 'Pages::view/$1');
+$routes->resource('employees');
 
 /*
  * --------------------------------------------------------------------
