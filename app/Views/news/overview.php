@@ -9,7 +9,7 @@
     <div class="main">
         <?php echo esc($item->body); ?>
     </div>
-    <p><a href="<?php echo site_url("news/" . esc($item->slug, 'url')) ?>">View article</a></p>
+    <p><a href="<?php echo base_url("news/" . esc($item->slug, 'url')) ?>">View article</a></p>
 
 <?php endforeach; ?>
 
