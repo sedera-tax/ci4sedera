@@ -8,7 +8,7 @@ use App\Models\ProductModel;
 class Products extends ResourceController
 {
     use ResponseTrait;
-    
+
     // get all product
     public function index()
     {

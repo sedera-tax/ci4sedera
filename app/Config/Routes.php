@@ -40,6 +40,11 @@ $routes->get('news', 'News::index');
 $routes->get('/static/(:any)', 'Pages::view/$1');
 $routes->resource('employees');
 $routes->resource('products');
+$routes->get('clients', 'Clients::index');
+$routes->post('clients', 'Clients::store');
+$routes->get('clients/(:num)', 'Clients::show/$1');
+$routes->post('clients/(:num)', 'Clients::update/$1');
+$routes->delete('clients/(:num)', 'Clients::destroy/$1');
 
 /*
  * --------------------------------------------------------------------

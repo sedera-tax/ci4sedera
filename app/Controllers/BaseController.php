@@ -6,6 +6,9 @@ use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\Validation\Exceptions\ValidationException;
+use Config\Services;
 
 /**
  * Class BaseController
@@ -46,4 +49,61 @@ class BaseController extends Controller
 		//--------------------------------------------------------------------
 		// E.g.: $this->session = \Config\Services::session();
 	}
+
+    /**
+     * @param array $responseBody
+     * @param int $code
+     * @return ResponseInterface
+     */
+    public function getResponse(array $responseBody, int $code = ResponseInterface::HTTP_OK)
+    {
+        return $this
+            ->response
+            ->setStatusCode($code)
+            ->setJSON($responseBody);
+    }
+
+    /**
+     * @param IncomingRequest $request
+     * @return mixed
+     */
+    public function getRequestInput(IncomingRequest $request)
+    {
+        $input = $request->getPost();
+        if (empty($input)) {
+            //convert request body to associative array
+            $input = json_decode($request->getBody(), true);
+        }
+        return $input;
+    }
+
+    /**
+     * @param $input
+     * @param array $rules
+     * @param array $messages
+     * @return bool
+     */
+    public function validateRequest($input, array $rules, array $messages =[])
+    {
+        $this->validator = Services::Validation()->setRules($rules);
+        // If you replace the $rules array with the name of the group
+        if (is_string($rules)) {
+            $validation = config('Validation');
+
+            // If the rule wasn't found in the \Config\Validation, we
+            // should throw an exception so the developer can find it.
+            if (!isset($validation->$rules)) {
+                throw ValidationException::forRuleNotFound($rules);
+            }
+
+            // If no error message is defined, use the error message in the Config\Validation file
+            if (!$messages) {
+                $errorName = $rules . '_errors';
+                $messages = $validation->$errorName ?? [];
+            }
+
+            $rules = $validation->$rules;
+        }
+        return $this->validator->setRules($rules, $messages)->run($input);
+    }
 }

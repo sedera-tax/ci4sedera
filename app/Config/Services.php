@@ -28,4 +28,11 @@ class Services extends BaseService
 	//
 	//     return new \CodeIgniter\Example();
 	// }
+
+    /**
+     * @return array|false|string
+     */
+    public static function getSecretKey(){
+        return getenv('JWT_SECRET_KEY');
+    }
 }
