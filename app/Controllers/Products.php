@@ -8,6 +8,7 @@ use App\Models\ProductModel;
 class Products extends ResourceController
 {
     use ResponseTrait;
+    
     // get all product
     public function index()
     {
@@ -20,7 +21,7 @@ class Products extends ResourceController
     public function show($id = null)
     {
         $model = new ProductModel();
-        $data = $model->getWhere(['id' => $id])->getResult();
+        $data = $model->where(['id' => $id])->first();
         if ($data)
         {
             return $this->respond($data);
