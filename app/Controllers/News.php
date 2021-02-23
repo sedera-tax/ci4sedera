@@ -35,6 +35,7 @@ class News extends Controller
 
         echo view('templates/header', $data);
         echo view('news/view', $data);
+        echo view_cell('\App\Libraries\Products::getRecentProducts', ['limit' => 5]);
         echo view('templates/footer', $data);
     }
 
