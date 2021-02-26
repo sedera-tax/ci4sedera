@@ -25,6 +25,7 @@ class News extends Controller
     {
         $model = new NewsModel();
         $data['news'] = $model->getNews($slug);
+        $data['last_news'] = $model->getLastNews(3);
 
         if (empty($data['news']))
         {

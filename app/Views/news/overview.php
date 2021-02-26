@@ -7,7 +7,7 @@
     <h3><?= esc($item->title) ?></h3>
 
     <div class="main">
-        <?php echo esc($item->body); ?>
+        <?php echo word_limiter(esc($item->body), 15); ?>
     </div>
     <p><a href="<?php echo base_url("news/" . esc($item->slug, 'url')) ?>">View article</a></p>
 
