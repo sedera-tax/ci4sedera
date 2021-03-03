@@ -1,14 +1,25 @@
 <?php
 namespace App\Models;
 
+use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Model;
+use CodeIgniter\Validation\ValidationInterface;
 
 class NewsModel extends Model
 {
+    protected $db;
+
     protected $table = 'news';
     protected $allowedFields = ['title', 'slug', 'body'];
     protected $returnType = 'App\Entities\News';
     protected $useTimestamps = true;
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
+
+    public function __construct(ConnectionInterface &$db = null, ValidationInterface $validation = null)
+    {
+        parent::__construct($db, $validation);
+    }
 
     /**
      * @param false $slug
@@ -43,7 +54,18 @@ class NewsModel extends Model
      */
     public function getLastNews($limit = 5)
     {
-        return $this->orderBy('created_at', 'desc')
+        return $this->orderBy('created_at', 'DESC')
+            ->get($limit)
+            ->getResult();
+    }
+
+    /**
+     * @param int $limit
+     * @return array
+     */
+    public function getRandomNews($limit = 5)
+    {
+        return $this->orderBy('created_at', 'RANDOM')
             ->get($limit)
             ->getResult();
     }

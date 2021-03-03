@@ -24,6 +24,22 @@ class Clients extends BaseController
     }
 
     /**
+     * @param int $page
+     * @return ResponseInterface
+     */
+    public function listPaginate($page = 1)
+    {
+        $model = new ClientModel();
+        return $this->getResponse(
+            [
+                'message' => 'Clients retrieved successfully',
+                'clients' => $model->paginate(8, "default", $page),
+                'pager' => $model->pager
+            ]
+        );
+    }
+
+    /**
      * Create a new Client
      */
     public function store()

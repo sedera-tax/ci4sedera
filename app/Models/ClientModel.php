@@ -12,6 +12,7 @@ class ClientModel extends Model
         'email',
         'retainer_fee'
     ];
+    protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
 
     public function findClientById($id)
