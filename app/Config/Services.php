@@ -3,6 +3,7 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseService;
+use CodeIgniter\Database\BaseConnection;
 
 /**
  * Services Configuration file.
@@ -34,5 +35,20 @@ class Services extends BaseService
      */
     public static function getSecretKey(){
         return getenv('JWT_SECRET_KEY');
+    }
+
+    /**
+     * @return BaseConnection
+     */
+    public static function switchDb()
+    {
+        $custom = [
+            'hostname' => 'localhost',
+            'username' => 'root',
+            'password' => '',
+            'database' => 'hr',
+            'DBDriver' => 'MySQLi',
+        ];
+        return db_connect($custom);
     }
 }

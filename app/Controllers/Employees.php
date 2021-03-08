@@ -13,15 +13,7 @@ class Employees extends ResourceController
     // all users
     public function index($id = null)
     {
-        $db = \Config\Database::connect();
-        $custom = [
-            'hostname' => 'localhost',
-            'username' => 'root',
-            'password' => '',
-            'database' => 'hr',
-            'DBDriver' => 'MySQLi',
-        ];
-        $db = \Config\Database::connect($custom);
+        $db = service('switchDb');
         $model = new EmployeesModel($db);
         $data['employees'] = $model->orderBy('id', 'DESC')->findAll();
         return $this->respond($data);

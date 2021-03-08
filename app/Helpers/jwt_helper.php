@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\UserModel;
-use Config\Services;
 use Firebase\JWT\JWT;
 
 function getJWTFromRequest($authenticationHeader): string
@@ -18,7 +17,10 @@ function validateJWTFromRequest(string $encodedToken)
     $key = Services::getSecretKey();
     $decodedToken = JWT::decode($encodedToken, $key, ['HS256']);
     $userModel = new UserModel();
-    $userModel->findUserByEmailAddress($decodedToken->email);
+    try {
+        $userModel->findUserByEmailAddress($decodedToken->email);
+    } catch (Exception $e) {
+    }
 }
 
 function getSignedJWTForUser(string $email)
@@ -32,6 +34,5 @@ function getSignedJWTForUser(string $email)
         'exp' => $tokenExpiration,
     ];
 
-    $jwt = JWT::encode($payload, Services::getSecretKey());
-    return $jwt;
+    return JWT::encode($payload, service('getSecretKey'));
 }
