@@ -14,6 +14,7 @@ class ClientModel extends Model
     ];
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
+    protected $useTimestamps = true;
 
     public function findClientById($id)
     {
