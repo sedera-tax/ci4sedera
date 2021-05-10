@@ -111,24 +111,31 @@ class SpreadsheetPage extends Controller
             $i++;
         }
 
-        $sheet->getStyle('A1:S1')->applyFromArray(
-            array(
-                'font' => array(
+        $sheet->getStyle('A1:C1')->applyFromArray(
+            [
+                'font' => [
                     'name' => 'Arial',
                     'bold' => true,
-                    'color' => array('rgb' => 'FF0000'),
-                ),
-                'fill' => array(
-                    'type'  => Fill::FILL_SOLID,
-                    'color' => array('rgb' => '000000'),
-                ),
-            )
+                    'color' => ['rgb' => 'FF0000'],
+                ],
+                /*'fill' => [
+                    'fillType'  => Fill::FILL_SOLID,
+                    'startColor' => ['rgb' => '000000'],
+                ],*/
+            ]
         );
 
-        $sheet->getStyle('A1:U'.$i)->getBorders()->applyFromArray(
+        $sheet->getStyle('A1:C1')->getFill()->applyFromArray(
+            [
+                'fillType' => Fill::FILL_SOLID,
+                'color' => ['rgb' => '000000']
+            ]
+        );
+
+        $sheet->getStyle('A1:C'.$i)->getBorders()->applyFromArray(
             array(
-                'allborders' => array(
-                    'style' => Border::BORDER_THIN,
+                'allBorders' => array(
+                    'borderStyle' => Border::BORDER_THIN,
                     'color' => array(
                         'rgb' => '000000'
                     )
