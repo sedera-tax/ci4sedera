@@ -60,4 +60,23 @@ class Pdf extends Controller
         // Output the generated PDF to Browser
         $this->pdf->stream('sedera_'.time().'.pdf');
     }
+
+    public function downloadPdf()
+    {
+        $options = $this->pdf->getOptions();
+        $options->setDefaultFont('Roboto');
+        $this->pdf->setOptions($options);
+
+        $this->pdf->loadHtml(view('pdf/template1'));
+
+        // Render the HTML as PDF
+        $this->pdf->render();
+
+        $filePath = FCPATH . 'pdf/' . 'sedera_'.time().'.pdf';
+
+        $output = $this->pdf->output();
+        file_put_contents($filePath, $output);
+
+        return 'PDF généré';
+    }
 }
