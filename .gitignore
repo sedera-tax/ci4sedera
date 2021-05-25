@@ -128,3 +128,6 @@ nb-configuration.xml
 # Sonarqube
 /.scannerwork/
 
+#Excel & PDF
+public/excel/*
+public/pdf/*
