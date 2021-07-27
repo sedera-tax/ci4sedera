@@ -1,5 +1,6 @@
 <?php
 
+use CodeIgniter\Config\Services;
 use App\Models\UserModel;
 use Firebase\JWT\JWT;
 
