@@ -9,7 +9,8 @@
 		"codeigniter4/framework": "^4",
 		"firebase/php-jwt": "^5.2",
 		"phpoffice/phpspreadsheet": "^1.17",
-		"dompdf/dompdf": "^1.0"
+		"dompdf/dompdf": "^1.0",
+		"endroid/qr-code": "^4.3"
 	},
 	"require-dev": {
 		"fakerphp/faker": "^1.9",
