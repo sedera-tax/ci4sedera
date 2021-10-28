@@ -46,6 +46,8 @@ $routes->get('clients/(:num)', 'Clients::show/$1');
 $routes->post('clients/(:num)', 'Clients::update/$1');
 $routes->delete('clients/(:num)', 'Clients::destroy/$1');
 
+$routes->post('qrcode', 'Qrcode::create');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
