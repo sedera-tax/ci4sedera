@@ -69,7 +69,14 @@ class BaseController extends Controller
      */
     public function getRequestInput(IncomingRequest $request)
     {
-        $input = $request->getPost();
+        $input = null;
+
+        if ($this->request->getMethod() == 'post') {
+            $input = $request->getPost();
+        } elseif ($this->request->getMethod() == 'put') {
+            $input = $request->getRawInput();
+        }
+
         if (empty($input)) {
             //convert request body to associative array
             $input = json_decode($request->getBody(), true);

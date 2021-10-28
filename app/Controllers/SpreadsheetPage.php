@@ -111,6 +111,10 @@ class SpreadsheetPage extends Controller
             $i++;
         }
 
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setAutoSize(true);
+        $sheet->getColumnDimension('C')->setAutoSize(true);
+
         $sheet->getStyle('A1:C1')->applyFromArray(
             [
                 'font' => [
