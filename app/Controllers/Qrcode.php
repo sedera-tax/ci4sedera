@@ -59,7 +59,7 @@ class Qrcode extends ResourceController
 
                 $result = $writer->write($qrCode, $logo, $label);
                 // Directly output the QR code
-                header('Content-Type: '.$result->getMimeType());
+                //header('Content-Type: '.$result->getMimeType());
                 //echo $result->getString();
 
                 // Save it to a file
