@@ -1,11 +1,12 @@
 <?php
 helper('image_helper');
 
-$image1Path = FCPATH . "assets/images/close-up-face-young-woman-relaxing-gentle_158595-4585.jpg";
+//$image1Path = FCPATH . "assets/images/close-up-face-young-woman-relaxing-gentle_158595-4585.jpg";
+$image1Path = "https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/featured.png";
 $image2Path = FCPATH . "assets/images/ssdf-min.jpg";
 $image3Path = FCPATH . "assets/images/ggfg.jpg";
 
-$image1 = imageToBase64($image1Path);
+$image1 = imageToBase64Url($image1Path);
 $image2 = imageToBase64($image2Path);
 $image3 = imageToBase64($image3Path);
 ?>
