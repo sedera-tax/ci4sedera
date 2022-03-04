@@ -23,9 +23,16 @@ class Qrcode extends ResourceController
 
         if ($this->request->getMethod() === 'post'
             && $this->validate([
-                'type' => 'required',
+                'url' => 'trim|required|valid_url'
             ]))
         {
+            $url = trim($this->request->getVar('url'));
+            if (!$this->valid_url($url)) {
+                return $this->fail('Error : url not valid');
+            }
+
+            $name = $this->request->getVar('name') ?? null;
+            $textLabel = $this->request->getVar('text') ?? null;
             $type = $this->request->getVar('type') ?? null;
             if ($type == 'svg')
             {
@@ -39,7 +46,7 @@ class Qrcode extends ResourceController
 
             try {
                 // Create QR code
-                $qrCode = QrCodeLib::create('http://www.facebook.com')
+                $qrCode = QrCodeLib::create($url)
                     ->setEncoding(new Encoding('UTF-8'))
                     ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
                     ->setSize(300)
@@ -54,16 +61,23 @@ class Qrcode extends ResourceController
                 $logo = null;
 
                 // Create generic label
-                $label = Label::create('Label')
-                    ->setTextColor(new Color(255, 0, 0));
+                $label = null;
+                if (!empty($textLabel)) {
+                    $label = Label::create($textLabel)
+                        ->setTextColor(new Color(255, 0, 0));
+                }
 
                 $result = $writer->write($qrCode, $logo, $label);
                 // Directly output the QR code
                 //header('Content-Type: '.$result->getMimeType());
                 //echo $result->getString();
 
+                $fileName = time();
+                if (!empty($name)) {
+                    $fileName = $name;
+                }
                 // Save it to a file
-                $result->saveToFile(FCPATH.'qrcode/'.time().$ext);
+                $result->saveToFile(FCPATH.'qrcode/'.$fileName.$ext);
                 $response = [
                     'status'   => 201,
                     'error'    => null,
@@ -80,5 +94,10 @@ class Qrcode extends ResourceController
         {
             return $this->failValidationError("Invalid Qrcode");
         }
+    }
+
+    public function valid_url($str)
+    {
+        return (filter_var($str, FILTER_VALIDATE_URL) !== FALSE);
     }
 }
